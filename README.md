@@ -1,4 +1,4 @@
-# Flight Search API - Backend Developer
+# Flight Search Backend 
 
 This repository contains the backend implementation of a flight search application. The API is designed to manage flights, airports, and provide a search functionality to retrieve relevant flight information.
 
