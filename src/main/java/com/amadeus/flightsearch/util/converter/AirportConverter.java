@@ -9,11 +9,11 @@ public class AirportConverter {
 
     public Airport toEntity(AirportDto airportDto) {
         return Airport.builder()
-                .city(airportDto.getCity())
+                .city(airportDto.city())
                 .build();
     }
 
-    public static AirportDto toDTO(Airport airport) {
+    public static AirportDto toDto(Airport airport) {
         return AirportDto.builder()
                 .city(airport.getCity())
                 .build();

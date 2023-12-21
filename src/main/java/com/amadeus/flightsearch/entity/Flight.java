@@ -33,5 +33,4 @@ public class Flight {
     @Column(name = "arrival_time")
     private LocalTime arrivalTime;
 
-
 }

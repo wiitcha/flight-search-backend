@@ -10,7 +10,6 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
-import java.util.stream.Collectors;
 
 @RestController
 @RequiredArgsConstructor
@@ -22,8 +21,8 @@ public class AirportController {
     @GetMapping
     public ResponseEntity<List<AirportDto>> getAllAirports() {
         List<AirportDto> airports = airportService.getAllAirports().stream()
-                .map(AirportConverter::toDTO)
-                .collect(Collectors.toList());
+                .map(AirportConverter::toDto)
+                .toList();
         return ResponseEntity.ok(airports);
     }
 
@@ -36,7 +35,7 @@ public class AirportController {
     @GetMapping("/{id}")
     public ResponseEntity<AirportDto> getAirport(@PathVariable Long id) {
         Airport airport = airportService.getAirport(id);
-        return ResponseEntity.ok(AirportConverter.toDTO(airport));
+        return ResponseEntity.ok(AirportConverter.toDto(airport));
     }
 
     @PutMapping("/{id}")

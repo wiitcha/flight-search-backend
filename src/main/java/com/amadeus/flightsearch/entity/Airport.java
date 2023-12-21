@@ -23,8 +23,8 @@ public class Airport {
     private String city;
 
     @OneToMany(mappedBy = "departureAirport")
-    private List<Flight> kalkisUcusList;
+    private List<Flight> departureFlightsList;
 
     @OneToMany(mappedBy = "arrivalAirport")
-    private List<Flight> varisUcusList;
+    private List<Flight> arrivalFlightsList;
 }

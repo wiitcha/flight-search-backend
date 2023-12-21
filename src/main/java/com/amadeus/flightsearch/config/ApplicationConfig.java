@@ -1,7 +1,7 @@
 package com.amadeus.flightsearch.config;
 
 
-import com.amadeus.flightsearch.repository.AppUserRepository;
+import com.amadeus.flightsearch.repository.MemberRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -18,12 +18,12 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 @RequiredArgsConstructor
 public class ApplicationConfig {
 
-    private final AppUserRepository userRepository;
+    private final MemberRepository userRepository;
 
     @Bean
     public UserDetailsService userDetailsService() {
         return username -> userRepository.findByUsername(username)
-                .orElseThrow(() -> new UsernameNotFoundException("AppUser not found"));
+                .orElseThrow(() -> new UsernameNotFoundException("Member not found"));
     }
 
     @Bean

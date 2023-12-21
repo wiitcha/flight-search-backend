@@ -15,7 +15,7 @@ import java.util.List;
 @Setter
 @Builder
 @Entity
-public class AppUser implements UserDetails {
+public class Member implements UserDetails {
 
     @Id
     @Column(name = "id")

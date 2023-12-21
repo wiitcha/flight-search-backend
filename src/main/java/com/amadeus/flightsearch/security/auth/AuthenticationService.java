@@ -1,8 +1,8 @@
 package com.amadeus.flightsearch.security.auth;
 
 import com.amadeus.flightsearch.config.JwtService;
-import com.amadeus.flightsearch.repository.AppUserRepository;
-import com.amadeus.flightsearch.security.user.AppUser;
+import com.amadeus.flightsearch.repository.MemberRepository;
+import com.amadeus.flightsearch.security.user.Member;
 import com.amadeus.flightsearch.security.user.Role;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.authentication.AuthenticationManager;
@@ -15,13 +15,13 @@ import org.springframework.stereotype.Service;
 @RequiredArgsConstructor
 public class AuthenticationService {
 
-    private final AppUserRepository userRepository;
+    private final MemberRepository userRepository;
     private final PasswordEncoder passwordEncoder;
     private final JwtService jwtService;
     private final AuthenticationManager authenticationManager;
 
     public AuthenticationResponse register(RegisterRequest request) {
-        AppUser appUser = AppUser.builder()
+        Member member = Member.builder()
                 .firstName(request.getFirstName())
                 .lastName(request.getLastName())
                 .username(request.getUsername())
@@ -29,9 +29,9 @@ public class AuthenticationService {
                 .role(Role.USER)
                 .build();
 
-        userRepository.save(appUser);
+        userRepository.save(member);
 
-        String jwtToken = jwtService.generateToken(appUser);
+        String jwtToken = jwtService.generateToken(member);
 
         return AuthenticationResponse.builder()
                 .token(jwtToken)
@@ -46,10 +46,10 @@ public class AuthenticationService {
                 )
         );
 
-        AppUser appUser = userRepository.findByUsername(request.getUsername())
-                .orElseThrow(() -> new UsernameNotFoundException("AppUser not found - " + request.getUsername()));
+        Member member = userRepository.findByUsername(request.getUsername())
+                .orElseThrow(() -> new UsernameNotFoundException("Member not found - " + request.getUsername()));
 
-        String jwtToken = jwtService.generateToken(appUser);
+        String jwtToken = jwtService.generateToken(member);
 
         return AuthenticationResponse.builder()
                 .token(jwtToken)
