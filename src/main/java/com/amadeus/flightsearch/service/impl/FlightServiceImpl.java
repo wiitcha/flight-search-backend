@@ -11,14 +11,10 @@ import com.amadeus.flightsearch.service.AirportService;
 import com.amadeus.flightsearch.service.FlightService;
 import com.amadeus.flightsearch.util.converter.FlightConverter;
 import jakarta.persistence.EntityManager;
-import jakarta.persistence.criteria.CriteriaBuilder;
-import jakarta.persistence.criteria.CriteriaQuery;
-import jakarta.persistence.criteria.Predicate;
-import jakarta.persistence.criteria.Root;
+import jakarta.persistence.criteria.*;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
-import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
@@ -71,7 +67,6 @@ public class FlightServiceImpl implements FlightService {
                     flightDto.returnTime(),
                     flightDto.departureDate(),
                     flightDto.returnDate()
-
             )) {
                 Flight flight = flightConverter.toEntity(flightDto);
                 flightRepository.save(flight);
@@ -88,33 +83,43 @@ public class FlightServiceImpl implements FlightService {
     }
 
     @Override
-    public List<FlightResponseDto> searchFlights(Long departureAirport, Long arrivalAirport, LocalDate departureDate, LocalDate returnDate) {
+    public List<FlightResponseDto> searchFlights(FlightDto flightDto) {
         CriteriaBuilder criteriaBuilder = entityManager.getCriteriaBuilder();
         CriteriaQuery<Flight> criteriaQuery = criteriaBuilder.createQuery(Flight.class);
 
-        Root<Flight> flight = criteriaQuery.from(Flight.class);
-        List<Predicate> predicates = new ArrayList<>();
+        Root<Flight> flightRoot = criteriaQuery.from(Flight.class);
 
-        if (departureAirport != null) {
-            predicates.add(criteriaBuilder.equal(flight.get("departureAirport").get("id"), departureAirport));
-        }
-
-        if (arrivalAirport != null) {
-            predicates.add(criteriaBuilder.equal(flight.get("arrivalAirport").get("id"), arrivalAirport));
-        }
-
-        if (departureDate != null) {
-            predicates.add(criteriaBuilder.equal(flight.get("departureDate"), departureDate));
-        }
-
-        if (returnDate != null) {
-            predicates.add(criteriaBuilder.equal(flight.get("returnDate"), returnDate));
-        }
+        List<Predicate> predicates = buildPredicates(criteriaBuilder, flightRoot, flightDto);
 
         criteriaQuery.where(predicates.toArray(new Predicate[0]));
 
-        return entityManager.createQuery(criteriaQuery).getResultList().stream()
+        return entityManager.createQuery(criteriaQuery)
+                .getResultList()
+                .stream()
                 .map(FlightConverter::toResponseDto)
                 .toList();
+    }
+
+    private List<Predicate> buildPredicates(CriteriaBuilder criteriaBuilder, Root<Flight> flightRoot, FlightDto flightDto) {
+        List<Predicate> predicates = new ArrayList<>();
+
+        addEqualPredicate(criteriaBuilder, flightRoot.get("departureAirport").get("id"), flightDto.departureAirport())
+                .ifPresent(predicates::add);
+
+        addEqualPredicate(criteriaBuilder, flightRoot.get("arrivalAirport").get("id"), flightDto.arrivalAirport())
+                .ifPresent(predicates::add);
+
+        addEqualPredicate(criteriaBuilder, flightRoot.get("departureDate"), flightDto.departureDate())
+                .ifPresent(predicates::add);
+
+        addEqualPredicate(criteriaBuilder, flightRoot.get("returnDate"), flightDto.returnDate())
+                .ifPresent(predicates::add);
+
+        return predicates;
+    }
+
+    private Optional<Predicate> addEqualPredicate(CriteriaBuilder criteriaBuilder, Path<?> path, Object value) {
+        return Optional.ofNullable(value)
+                .map(val -> criteriaBuilder.equal(path, val));
     }
 }

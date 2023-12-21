@@ -47,11 +47,6 @@ public class FlightController {
 
     @GetMapping("/search")
     public ResponseEntity<List<FlightResponseDto>> retrieveFlights(@RequestBody FlightDto flightDto) {
-        return ResponseEntity.ok(flightService.searchFlights(
-                flightDto.departureAirport(),
-                flightDto.arrivalAirport(),
-                flightDto.departureDate(),
-                flightDto.returnDate()
-        ));
+        return ResponseEntity.ok(flightService.searchFlights(flightDto));
     }
 }
