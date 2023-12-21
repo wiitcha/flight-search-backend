@@ -27,12 +27,17 @@ public class AirportServiceImpl implements AirportService {
 
     @Override
     public void updateAirport(Long id, AirportDto airportDto) {
-        Airport airport = airportRepository.findAirportById(id).orElseThrow(() -> new RuntimeException("Airport is not found"));
-        airportRepository.save(airport);
+        Airport existingAirport = airportRepository.findById(id)
+                .orElseThrow(AirportIsNotFoundException::new);
+
+        Airport updatedAirport = airportConverter.toEntity(airportDto);
+        updatedAirport.setId(existingAirport.getId());
+
+        airportRepository.save(updatedAirport);
     }
 
     @Override
-    public List<Airport> findAllAirports() {
+    public List<Airport> getAllAirports() {
         return airportRepository.findAll();
     }
 
@@ -44,5 +49,10 @@ public class AirportServiceImpl implements AirportService {
             return airport;
         }
         throw new AirportAlreadyExistsException();
+    }
+
+    @Override
+    public Airport getAirport(Long id) {
+        return airportRepository.findAirportById(id).orElseThrow(AirportIsNotFoundException::new);
     }
 }

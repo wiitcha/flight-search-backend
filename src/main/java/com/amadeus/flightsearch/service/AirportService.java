@@ -7,11 +7,14 @@ import java.util.List;
 
 public interface AirportService {
 
+
     void deleteAirport(Long id);
     void updateAirport(Long id, AirportDto airportDto);
-    List<Airport> findAllAirports();
+    List<Airport> getAllAirports();
 
     Airport saveAirport(AirportDto airportDto);
+
+    Airport getAirport(Long id);
 
 
 

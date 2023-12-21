@@ -1,6 +1,7 @@
 package com.amadeus.flightsearch.dto;
 
 import com.amadeus.flightsearch.entity.Flight;
+import com.fasterxml.jackson.annotation.JsonInclude;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.Setter;
@@ -15,6 +16,7 @@ import java.time.LocalTime;
 @Getter
 @Setter
 @Builder
+@JsonInclude(JsonInclude.Include.NON_NULL)
 @Value
 public class FlightDto implements Serializable {
     Long id;

@@ -13,4 +13,10 @@ public class AirportConverter {
                 .build();
     }
 
+    public static AirportDto toDTO(Airport airport) {
+        return AirportDto.builder()
+                .city(airport.getCity())
+                .build();
+    }
+
 }
