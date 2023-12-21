@@ -15,6 +15,7 @@ public class AirportConverter {
 
     public static AirportDto toDto(Airport airport) {
         return AirportDto.builder()
+                .id(airport.getId())
                 .city(airport.getCity())
                 .build();
     }

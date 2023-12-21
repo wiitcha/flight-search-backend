@@ -5,28 +5,29 @@ import com.amadeus.flightsearch.dto.FlightResponseDto;
 import com.amadeus.flightsearch.entity.Airport;
 import com.amadeus.flightsearch.entity.Flight;
 import com.amadeus.flightsearch.exception.AirportNotFoundException;
-import com.amadeus.flightsearch.repository.AirportRepository;
+import com.amadeus.flightsearch.service.AirportService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Component;
 
-import java.util.Optional;
 
 @Component
 @RequiredArgsConstructor
 public class FlightConverter {
 
-    private final AirportRepository airportRepository;
+    private final AirportService airportService;
 
     public Flight toEntity(FlightDto flightDto) {
-        Optional<Airport> departureAirport = airportRepository.findAirportById(flightDto.departureAirport());
-        Optional<Airport> arrivalAirport = airportRepository.findAirportById(flightDto.arrivalAirport());
+        Airport departureAirport = airportService.getAirport(flightDto.departureAirport());
+        Airport arrivalAirport = airportService.getAirport(flightDto.arrivalAirport());
 
-        if (departureAirport.isPresent() && arrivalAirport.isPresent()) {
+        if (departureAirport != null && arrivalAirport != null) {
             return Flight.builder()
-                    .departureAirport(departureAirport.get())
-                    .arrivalAirport(arrivalAirport.get())
+                    .departureAirport(departureAirport)
+                    .arrivalAirport(arrivalAirport)
+                    .departureDate(flightDto.departureDate())
                     .departureTime(flightDto.departureTime())
-                    .arrivalTime(flightDto.arrivalTime())
+                    .returnDate(flightDto.returnDate())
+                    .returnTime(flightDto.returnTime())
                     .build();
         }
         throw new AirportNotFoundException("Invalid airport credentials");
@@ -34,19 +35,25 @@ public class FlightConverter {
 
     public static FlightDto toDto(Flight flight) {
         return FlightDto.builder()
+                .id(flight.getId())
                 .departureAirport(flight.getDepartureAirport().getId())
                 .arrivalAirport(flight.getArrivalAirport().getId())
+                .departureDate(flight.getDepartureDate())
                 .departureTime(flight.getDepartureTime())
-                .arrivalTime(flight.getArrivalTime())
+                .returnDate(flight.getReturnDate())
+                .returnTime(flight.getReturnTime())
                 .build();
     }
 
     public static FlightResponseDto toResponseDto(Flight flight) {
         return FlightResponseDto.builder()
+                .id(flight.getId())
                 .departureAirport(flight.getDepartureAirport().getCity())
                 .arrivalAirport(flight.getArrivalAirport().getCity())
+                .departureDate(flight.getDepartureDate())
                 .departureTime(flight.getDepartureTime())
-                .arrivalTime(flight.getArrivalTime())
+                .returnDate(flight.getReturnDate())
+                .returnTime(flight.getReturnTime())
                 .build();
     }
 }

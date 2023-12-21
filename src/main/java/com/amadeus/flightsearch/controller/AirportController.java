@@ -1,7 +1,6 @@
 package com.amadeus.flightsearch.controller;
 
 import com.amadeus.flightsearch.dto.AirportDto;
-import com.amadeus.flightsearch.entity.Airport;
 import com.amadeus.flightsearch.service.AirportService;
 import com.amadeus.flightsearch.util.converter.AirportConverter;
 import lombok.RequiredArgsConstructor;
@@ -34,8 +33,7 @@ public class AirportController {
 
     @GetMapping("/{id}")
     public ResponseEntity<AirportDto> getAirport(@PathVariable Long id) {
-        Airport airport = airportService.getAirport(id);
-        return ResponseEntity.ok(AirportConverter.toDto(airport));
+        return ResponseEntity.ok(airportService.getAirportDto(id));
     }
 
     @PutMapping("/{id}")

@@ -56,6 +56,12 @@ public class AirportServiceImpl implements AirportService {
     }
 
     @Override
+    public AirportDto getAirportDto(Long id) {
+        Airport airport = airportRepository.findAirportById(id).orElseThrow(() -> new AirportNotFoundException(id));
+        return AirportConverter.toDto(airport);
+    }
+
+    @Override
     public Airport getAirport(Long id) {
         return airportRepository.findAirportById(id).orElseThrow(() -> new AirportNotFoundException(id));
     }

@@ -3,6 +3,7 @@ package com.amadeus.flightsearch.entity;
 import jakarta.persistence.*;
 import lombok.*;
 
+import java.time.LocalDate;
 import java.time.LocalTime;
 
 @Getter
@@ -27,10 +28,16 @@ public class Flight {
     @JoinColumn(name = "arrival_airport_id")
     private Airport arrivalAirport;
 
+    @Column(name = "departure_date")
+    private LocalDate departureDate;
+
     @Column(name = "departure_time")
     private LocalTime departureTime;
 
-    @Column(name = "arrival_time")
-    private LocalTime arrivalTime;
+    @Column(name = "return_date")
+    private LocalDate returnDate;
+
+    @Column(name = "return_time")
+    private LocalTime returnTime;
 
 }

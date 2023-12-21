@@ -2,9 +2,7 @@ package com.amadeus.flightsearch.controller;
 
 import com.amadeus.flightsearch.dto.FlightDto;
 import com.amadeus.flightsearch.dto.FlightResponseDto;
-import com.amadeus.flightsearch.entity.Flight;
 import com.amadeus.flightsearch.service.FlightService;
-import com.amadeus.flightsearch.util.converter.FlightConverter;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -32,8 +30,7 @@ public class FlightController {
 
     @GetMapping("/{id}")
     public ResponseEntity<FlightResponseDto> getFlight(@PathVariable Long id) {
-        Flight flight = flightService.getFlight(id);
-        return ResponseEntity.ok(FlightConverter.toResponseDto(flight));
+        return ResponseEntity.ok(flightService.getFlight(id));
     }
 
     @PutMapping("/{id}")
@@ -48,7 +45,13 @@ public class FlightController {
         return ResponseEntity.ok().build();
     }
 
-
-
-
+    @GetMapping("/search")
+    public ResponseEntity<List<FlightResponseDto>> retrieveFlights(@RequestBody FlightDto flightDto) {
+        return ResponseEntity.ok(flightService.searchFlights(
+                flightDto.departureAirport(),
+                flightDto.arrivalAirport(),
+                flightDto.departureDate(),
+                flightDto.returnDate()
+        ));
+    }
 }

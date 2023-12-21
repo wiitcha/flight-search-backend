@@ -14,6 +14,7 @@ public interface AirportService {
 
     Airport saveAirport(AirportDto airportDto);
 
+    AirportDto getAirportDto(Long id);
     Airport getAirport(Long id);
 
 
