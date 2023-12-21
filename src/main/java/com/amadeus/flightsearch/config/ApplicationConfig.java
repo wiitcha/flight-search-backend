@@ -1,7 +1,7 @@
 package com.amadeus.flightsearch.config;
 
 
-import com.amadeus.flightsearch.repository.UserRepository;
+import com.amadeus.flightsearch.repository.AppUserRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -18,7 +18,7 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 @RequiredArgsConstructor
 public class ApplicationConfig {
 
-    private final UserRepository userRepository;
+    private final AppUserRepository userRepository;
 
     @Bean
     public UserDetailsService userDetailsService() {

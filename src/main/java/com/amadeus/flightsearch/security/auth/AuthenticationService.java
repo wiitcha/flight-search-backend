@@ -1,7 +1,7 @@
 package com.amadeus.flightsearch.security.auth;
 
 import com.amadeus.flightsearch.config.JwtService;
-import com.amadeus.flightsearch.repository.UserRepository;
+import com.amadeus.flightsearch.repository.AppUserRepository;
 import com.amadeus.flightsearch.security.user.AppUser;
 import com.amadeus.flightsearch.security.user.Role;
 import lombok.RequiredArgsConstructor;
@@ -15,7 +15,7 @@ import org.springframework.stereotype.Service;
 @RequiredArgsConstructor
 public class AuthenticationService {
 
-    private final UserRepository userRepository;
+    private final AppUserRepository userRepository;
     private final PasswordEncoder passwordEncoder;
     private final JwtService jwtService;
     private final AuthenticationManager authenticationManager;
