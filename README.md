@@ -50,21 +50,18 @@ The API follows REST architecture, allowing seamless interaction with other syst
 
 ## Technology Stack
 
-- Java (Spring/Spring Boot)
-- Relational or NoSQL Database
+- Java (Spring Boot)
+- Relational Database (PostgreSQL)
 - RESTful Architecture
+- JWT Authentication
 
 ## Authentication
 
-An authentication structure is implemented to verify and authorize users, enhancing the overall security of the system. The chosen authentication mechanism can be configured as needed.
+An authentication structure is implemented to verify and authorize users, enhancing the overall security of the system. The chosen authentication mechanism is JWT Security.
 
 ## Scheduled Background Jobs
 
 A scheduled background job is set up to fetch flight information from a mock third-party API daily. This data is then stored in the database for up-to-date information.
-
-## Version Control
-
-The project uses Git for version control. The codebase is hosted on GitHub for collaboration and easy access.
 
 ## Documentation
 
