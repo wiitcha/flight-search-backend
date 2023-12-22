@@ -65,4 +65,9 @@ public class AirportServiceImpl implements AirportService {
     public Airport getAirport(Long id) {
         return airportRepository.findAirportById(id).orElseThrow(() -> new AirportNotFoundException(id));
     }
+
+    @Override
+    public long getAirportCount() {
+        return airportRepository.count();
+    }
 }

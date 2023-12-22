@@ -16,6 +16,7 @@ public interface AirportService {
 
     AirportDto getAirportDto(Long id);
     Airport getAirport(Long id);
+    long getAirportCount();
 
 
 
