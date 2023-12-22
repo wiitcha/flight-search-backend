@@ -3,6 +3,7 @@ package com.amadeus.flightsearch.controller;
 import com.amadeus.flightsearch.dto.FlightDto;
 import com.amadeus.flightsearch.dto.FlightResponseDto;
 import com.amadeus.flightsearch.service.FlightService;
+import io.swagger.v3.oas.annotations.security.SecurityRequirement;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -13,6 +14,7 @@ import java.util.List;
 @RestController
 @RequiredArgsConstructor
 @RequestMapping("/api/v1/flights")
+@SecurityRequirement(name = "bearerAuth")
 public class FlightController {
 
     private final FlightService flightService;
