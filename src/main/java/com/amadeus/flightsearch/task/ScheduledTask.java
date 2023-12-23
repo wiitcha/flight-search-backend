@@ -29,7 +29,7 @@ public class ScheduledTask {
     private static final Random random = new Random();
 
 
-    @Scheduled(cron = "0 32 13 * * *") // Run every day at 6am
+    @Scheduled(cron = "0 0 6 * * *") // Run every day at 6am
     public void generateAndSendMockApiRequest() {
         FlightDto mockFlight = createMockFlight();
 
