@@ -1,5 +1,8 @@
 package com.amadeus.flightsearch.exception;
 
+import com.amadeus.flightsearch.exception.custom_exceptions.AirportNotFoundException;
+import com.amadeus.flightsearch.exception.custom_exceptions.FlightAlreadyExistsException;
+import com.amadeus.flightsearch.exception.custom_exceptions.FlightNotFoundException;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.ControllerAdvice;

@@ -1,4 +1,4 @@
-package com.amadeus.flightsearch.exception;
+package com.amadeus.flightsearch.exception.custom_exceptions;
 
 public class AirportNotFoundException extends RuntimeException{
     public AirportNotFoundException(Long id) {

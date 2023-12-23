@@ -2,8 +2,8 @@ package com.amadeus.flightsearch.service.impl;
 
 import com.amadeus.flightsearch.dto.AirportDto;
 import com.amadeus.flightsearch.entity.Airport;
-import com.amadeus.flightsearch.exception.AirportAlreadyExistsException;
-import com.amadeus.flightsearch.exception.AirportNotFoundException;
+import com.amadeus.flightsearch.exception.custom_exceptions.AirportAlreadyExistsException;
+import com.amadeus.flightsearch.exception.custom_exceptions.AirportNotFoundException;
 import com.amadeus.flightsearch.repository.AirportRepository;
 import com.amadeus.flightsearch.service.AirportService;
 import com.amadeus.flightsearch.util.converter.AirportConverter;

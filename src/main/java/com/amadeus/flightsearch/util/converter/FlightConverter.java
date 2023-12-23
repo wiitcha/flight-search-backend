@@ -4,7 +4,7 @@ import com.amadeus.flightsearch.dto.FlightDto;
 import com.amadeus.flightsearch.dto.FlightResponseDto;
 import com.amadeus.flightsearch.entity.Airport;
 import com.amadeus.flightsearch.entity.Flight;
-import com.amadeus.flightsearch.exception.AirportNotFoundException;
+import com.amadeus.flightsearch.exception.custom_exceptions.AirportNotFoundException;
 import com.amadeus.flightsearch.service.AirportService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Component;

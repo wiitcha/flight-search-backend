@@ -1,6 +1,7 @@
 package com.amadeus.flightsearch.task;
 
 import com.amadeus.flightsearch.dto.FlightDto;
+import com.amadeus.flightsearch.exception.custom_exceptions.JsonConvertingException;
 import com.amadeus.flightsearch.service.AirportService;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import lombok.RequiredArgsConstructor;
@@ -28,7 +29,7 @@ public class ScheduledTask {
     private static final Random random = new Random();
 
 
-    @Scheduled(cron = "0 0 6 * * *") // Run every day at 6am
+    @Scheduled(cron = "0 32 13 * * *") // Run every day at 6am
     public void generateAndSendMockApiRequest() {
         FlightDto mockFlight = createMockFlight();
 
@@ -37,15 +38,13 @@ public class ScheduledTask {
         HttpHeaders headers = new HttpHeaders();
         headers.setContentType(MediaType.APPLICATION_JSON);
 
-        // Authorization token must be added to header in order not to receive forbidden http status code
-
         HttpEntity<String> requestEntity = new HttpEntity<>(requestJson, headers);
 
-        String apiUrl = "http://localhost:8080/api/v1/flights";
+        String apiUrl = "http://localhost:8080/mock-api/v1/flights";
 
         restTemplate.exchange(apiUrl, HttpMethod.POST, requestEntity, String.class);
 
-        logger.info("Mock API request sent in " + LocalDate.now() + " at " + LocalTime.now());
+        logger.info("Mock API request sent on " + LocalDate.now() + " at " + LocalTime.now());
     }
 
     private FlightDto createMockFlight() {
@@ -90,7 +89,7 @@ public class ScheduledTask {
         try {
             return objectMapper.writeValueAsString(object);
         } catch (Exception e) {
-            throw new RuntimeException("Error converting object to JSON", e);
+            throw new JsonConvertingException();
         }
     }
 }
